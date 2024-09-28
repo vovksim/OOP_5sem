@@ -6,11 +6,13 @@ import java.time.Duration;
 public class Track {
   Integer id;
   String trackTitle;
+  String genre;
   Duration duration;
 
-  public Track(Integer _id, String _trackTitle, Duration _duration) {
+  public Track(Integer _id, String _trackTitle, String _genre, Duration _duration) {
     this.id = _id;
     this.trackTitle = _trackTitle;
+    this.genre = _genre;
     this.duration = _duration;
   }
 
@@ -30,6 +32,10 @@ public class Track {
     this.id = _id; 
   }
 
+  public String getGenre() {
+    return genre;
+  }
+
   public void setTrackTitle(String _trackTitle) {
     this.trackTitle = _trackTitle;
   }
@@ -38,8 +44,12 @@ public class Track {
     this.duration = _duration;
   }
 
+  public void setGenre(String _genre) {
+    this.genre = _genre;
+  }
+
   @Override
   public String toString() {
-    return id + ". " + trackTitle + duration.toMinutes() + "m " + duration.toSecondsPart() + "s";
+    return id + ". " + trackTitle + " " + genre + " " + duration.toMinutes() + "m " + duration.toSecondsPart() + "s";
   }
 }
