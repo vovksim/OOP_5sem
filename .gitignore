@@ -3,3 +3,6 @@ target
 
 #Maven files
 .mvn
+
+#Intellij idea files
+.idea
