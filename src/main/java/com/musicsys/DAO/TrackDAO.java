@@ -1,8 +1,6 @@
 package com.musicsys.DAO;
 
 import com.musicsys.Entity.Track;
-import com.zaxxer.hikari.SQLExceptionOverride;
-import com.musicsys.DAO.AbstractDAO;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -11,12 +9,10 @@ import java.sql.ResultSet;
 import java.time.Duration;
 import java.util.ArrayList;
 
-import org.mariadb.jdbc.client.result.Result;
-
 public class TrackDAO extends AbstractDAO<Track> {
     public TrackDAO(Connection _connection) {
         super(_connection,
-                new AbstractDAO.ParameterMapper<Track>() {
+                new AbstractDAO.ParameterMapper<>() {
                     @Override
                     public void mapInsertParameters(PreparedStatement stmt, Track entity) throws SQLException {
                         stmt.setInt(1, entity.getId());
@@ -38,7 +34,7 @@ public class TrackDAO extends AbstractDAO<Track> {
                         stmt.setInt(1, id);
                     }
                 },
-                new AbstractDAO.ResultSetParser<Track>() {
+                new AbstractDAO.ResultSetParser<>() {
                     public ArrayList<Track> parseInList(ResultSet rs) throws SQLException {
                         ArrayList<Track> result = new ArrayList<>();
                         while (rs.next()) {
