@@ -5,7 +5,7 @@ public class CompilationTrack {
   Integer compilationId;
 
 
-  public CompilationTrack(Integer _trackId, Integer _compilationId) {
+  public CompilationTrack(Integer _compilationId, Integer _trackId) {
     this.compilationId = _compilationId;
     this.trackId = _trackId;
   }
