@@ -64,7 +64,7 @@ public class CompilationTrackDAO extends AbstractJunctionDAO<CompilationTrack> {
     }
 
     public ArrayList<CompilationTrack> getAllRelationsForCompilation(Integer compilationId) throws SQLException {
-        String query = "SELECT * FROM CompilationTrack WHERE track_id = ?";
+        String query = "SELECT * FROM CompilationTrack WHERE compilation_id = ?";
         return super.getAllRelationsById(compilationId, query);
     }
 }
