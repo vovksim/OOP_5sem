@@ -59,7 +59,14 @@ class CompilationTrackDAOTest {
     }
 
     @Test
-    void deleteRelation() {
+    void deleteRelation() throws SQLException {
+        connection.createStatement().execute("INSERT INTO  CompilationTrack (compilation_id,track_id) VALUES (1,1)");
+
+        compilationTrackDAO.deleteRelation(new CompilationTrack(1,1));
+
+        ResultSet resultSet = connection.createStatement().executeQuery("SELECT * FROM CompilationTrack");
+
+        assertFalse(resultSet.next());
     }
 
     @Test
