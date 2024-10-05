@@ -10,15 +10,15 @@ public abstract class AbstractDAO<T> implements AutoCloseable {
     Connection connection;
 
     public interface ParameterMapper<T> {
-        public void mapInsertParameters(PreparedStatement stmt, T entity) throws SQLException;
+        void mapInsertParameters(PreparedStatement stmt, T entity) throws SQLException;
 
-        public default void mapUpdateParameters(PreparedStatement stmt, T entity) throws SQLException {};
+        default void mapUpdateParameters(PreparedStatement stmt, T entity) throws SQLException {}
 
-        public void mapIdParameter(PreparedStatement stmt, Integer id) throws SQLException;
+        void mapIdParameter(PreparedStatement stmt, Integer id) throws SQLException;
     }
 
     public interface ResultSetParser<T> {
-        public ArrayList<T> parseInList(ResultSet rs) throws SQLException;
+        ArrayList<T> parseInList(ResultSet rs) throws SQLException;
     }
 
     protected final ParameterMapper<T> parameterMapper;
