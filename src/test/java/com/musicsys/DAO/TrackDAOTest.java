@@ -44,6 +44,23 @@ public class TrackDAOTest {
     }
 
     @Test
+    void parser() throws SQLException {
+        connection.createStatement().execute("INSERT INTO Track (id, title, genre, duration) VALUES (1, 'Track1', 'rock', 100)");
+        connection.createStatement().execute("INSERT INTO Track (id, title, genre, duration) VALUES (2, 'Track2', 'pop', 150)");
+
+        ResultSet resultSet = connection.createStatement().executeQuery("SELECT * FROM Track");
+
+        ArrayList<Track> expected = new ArrayList<>();
+        expected.add(new Track(1, "Track1", "rock", Duration.ofSeconds(100)));
+        expected.add(new Track(2, "Track2", "pop", Duration.ofSeconds(150)));
+
+        ArrayList<Track> actual = trackDAO.resultSetParser.parseInList(resultSet);
+
+        assertEquals(expected, actual);
+    }
+
+
+    @Test
     public void testInsertTrack() throws SQLException {
         Track excpectedTrack = new Track(1, "Track1", "rock", Duration.ofSeconds(100));
 
