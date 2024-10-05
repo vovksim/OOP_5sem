@@ -8,9 +8,9 @@ import java.util.ArrayList;
 
 import com.musicsys.Entity.CompilationTrack;
 
-public class TrackCompositionDAO extends AbstractJunctionDAO<CompilationTrack> {
+public class CompilationTrackDAO extends AbstractJunctionDAO<CompilationTrack> {
 
-  public TrackCompositionDAO(Connection _connection) {
+  public CompilationTrackDAO(Connection _connection) {
     super(_connection, 
       new ParameterMapper<CompilationTrack>() {
         @Override
