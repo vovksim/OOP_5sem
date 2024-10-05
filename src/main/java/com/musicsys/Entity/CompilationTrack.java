@@ -1,5 +1,7 @@
 package com.musicsys.Entity;
 
+import java.util.Objects;
+
 public class CompilationTrack {
     Integer trackId;
     Integer compilationId;
@@ -11,7 +13,7 @@ public class CompilationTrack {
     }
 
     public Integer getTrackId() {
-        return compilationId;
+        return trackId;
     }
 
     public Integer getCompilationId() {
