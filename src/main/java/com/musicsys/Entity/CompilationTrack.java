@@ -19,9 +19,9 @@ public class CompilationTrack {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (o instanceof CompilationTrack track) {
-            return track.compilationId.equals(track.getTrackId()) && track.trackId.equals(track.getTrackId());
+    public boolean equals(Object obj) {
+        if (obj instanceof CompilationTrack track) {
+            return this.compilationId.equals(track.getCompilationId()) && this.trackId.equals(track.getTrackId());
         }
         return false;
     }
