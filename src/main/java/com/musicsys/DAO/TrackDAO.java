@@ -38,7 +38,7 @@ public class TrackDAO extends AbstractDAO<Track> {
                     public ArrayList<Track> parseInList(ResultSet rs) throws SQLException {
                         ArrayList<Track> result = new ArrayList<>();
                         while (rs.next()) {
-                            Duration duration = Duration.ofSeconds(rs.getLong(4));
+                            Duration duration = Duration.ofSeconds(rs.getInt(4));
                             Track temp = new Track(rs.getInt(1), rs.getString(2), rs.getString(3), duration);
                             result.add(temp);
                         }
