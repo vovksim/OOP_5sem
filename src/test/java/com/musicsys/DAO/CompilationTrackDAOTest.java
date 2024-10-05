@@ -112,14 +112,51 @@ class CompilationTrackDAOTest {
     }
 
     @Test
-    void insert() {
+    void insert() throws SQLException {
+        CompilationTrack expected = new CompilationTrack(1,1);
+
+        compilationTrackDAO.insert(expected);
+
+        ResultSet resultSet = connection.createStatement().executeQuery("SELECT * FROM CompilationTrack");
+
+        CompilationTrack actual = compilationTrackDAO.resultSetParser.parseInList(resultSet).get(0);
+
+        assertEquals(expected, actual);
     }
 
     @Test
-    void getAllRelationsForTrack() {
+    void getAllRelationsForTrack() throws SQLException {
+        //compilation 1
+        connection.createStatement().execute("INSERT INTO  CompilationTrack (compilation_id,track_id) VALUES (1,1)");
+        connection.createStatement().execute("INSERT INTO  CompilationTrack (compilation_id,track_id) VALUES (1,2)");
+        //compilation 2
+        connection.createStatement().execute("INSERT INTO  CompilationTrack (compilation_id,track_id) VALUES (2,1)");
+
+        ArrayList<CompilationTrack> expected = new ArrayList<>();
+        expected.add(new CompilationTrack(1,1));
+        expected.add(new CompilationTrack(2,1));
+
+
+        ArrayList<CompilationTrack> actual = compilationTrackDAO.getAllRelationsForTrack(1);
+
+        assertEquals(expected, actual);
     }
 
     @Test
-    void getAllRelationsForCompilation() {
+    void getAllRelationsForCompilation() throws SQLException {
+        //compilation 1
+        connection.createStatement().execute("INSERT INTO  CompilationTrack (compilation_id,track_id) VALUES (1,1)");
+        connection.createStatement().execute("INSERT INTO  CompilationTrack (compilation_id,track_id) VALUES (1,2)");
+        //compilation 2
+        connection.createStatement().execute("INSERT INTO  CompilationTrack (compilation_id,track_id) VALUES (2,1)");
+
+        ArrayList<CompilationTrack> expected = new ArrayList<>();
+        expected.add(new CompilationTrack(1,1));
+        expected.add(new CompilationTrack(1,2));
+
+
+        ArrayList<CompilationTrack> actual = compilationTrackDAO.getAllRelationsForCompilation(1);
+
+        assertEquals(expected, actual);
     }
 }
