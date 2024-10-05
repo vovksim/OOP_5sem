@@ -1,7 +1,6 @@
 package com.musicsys.DAO;
 
 import com.musicsys.Entity.Compilation;
-import com.musicsys.Entity.CompilationTrack;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -21,6 +20,12 @@ public class CompilationDAO extends AbstractDAO<Compilation> {
                     }
 
                     @Override
+                    public void mapUpdateParameters(PreparedStatement stmt, Compilation entity) throws SQLException {
+                        stmt.setString(1, entity.getCompilationTitle());
+                        stmt.setInt(2, entity.getId());
+                    }
+
+                    @Override
                     public void mapIdParameter(PreparedStatement stmt, Integer id) throws SQLException {
                         stmt.setInt(1, id);
                     }
@@ -36,5 +41,30 @@ public class CompilationDAO extends AbstractDAO<Compilation> {
                         return result;
                     }
                 });
+    }
+
+    public void insert(Compilation entity) throws SQLException {
+        String query = "INSERT INTO compilation (id, compilationTitle) VALUES (?, ?)";
+        super.insert(entity, query);
+    }
+
+    public void update(Compilation entity) throws SQLException {
+        String query = "UPDATE compilation SET compilationTitle = ? WHERE id = ?";
+        super.update(entity, query);
+    }
+
+    public void delete(Integer id) throws SQLException {
+        String query = "DELETE FROM compilation WHERE id = ?";
+        super.delete(id, query);
+    }
+
+    public Compilation get(Integer id) throws SQLException {
+        String query = "SELECT * FROM compilation WHERE id = ?";
+        return super.getById(id, query);
+    }
+
+    public ArrayList<Compilation> getAll() throws SQLException {
+        String query = "SELECT * FROM compilation";
+        return super.getAll(query);
     }
 }
