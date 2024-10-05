@@ -91,7 +91,24 @@ class CompilationTrackDAOTest {
     }
 
     @Test
-    void deleteTrackFromAllCompilations() {
+    void deleteTrackFromAllCompilations() throws SQLException {
+        //compilation 1
+        connection.createStatement().execute("INSERT INTO  CompilationTrack (compilation_id,track_id) VALUES (1,1)");
+        connection.createStatement().execute("INSERT INTO  CompilationTrack (compilation_id,track_id) VALUES (1,2)");
+        //compilation 2
+        connection.createStatement().execute("INSERT INTO  CompilationTrack (compilation_id,track_id) VALUES (2,1)");
+
+        compilationTrackDAO.deleteTrackFromAllCompilations(1);
+
+        ResultSet resultSet = connection.createStatement().executeQuery("SELECT * FROM CompilationTrack WHERE track_id=1");
+
+        //track 1 deleted from everywhere
+        assertFalse(resultSet.next());
+
+        resultSet = connection.createStatement().executeQuery("SELECT * FROM CompilationTrack WHERE track_id=2");
+
+        //track 2 is still present
+        assertTrue(resultSet.next());
     }
 
     @Test
