@@ -7,59 +7,61 @@ import java.util.ArrayList;
 import java.sql.ResultSet;
 
 public abstract class AbstractDAO<T> implements AutoCloseable {
-  Connection connection;
+    Connection connection;
 
-  public interface ParameterMapper<T> {
-    public void mapInsertParameters(PreparedStatement stmt, T entity) throws SQLException;
-    public default void mapUpdateParameters(PreparedStatement stmt, T entity) throws SQLException {};
-    public void mapIdParameter(PreparedStatement stmt, Integer id) throws SQLException;
-  }
+    public interface ParameterMapper<T> {
+        public void mapInsertParameters(PreparedStatement stmt, T entity) throws SQLException;
 
-  public interface ResultSetParser<T> {
-    public ArrayList<T> parseInList(ResultSet rs) throws SQLException;
-  }
+        public default void mapUpdateParameters(PreparedStatement stmt, T entity) throws SQLException {};
 
-  protected final ParameterMapper<T> parameterMapper;
-  protected final ResultSetParser<T> resultSetParser;
+        public void mapIdParameter(PreparedStatement stmt, Integer id) throws SQLException;
+    }
+
+    public interface ResultSetParser<T> {
+        public ArrayList<T> parseInList(ResultSet rs) throws SQLException;
+    }
+
+    protected final ParameterMapper<T> parameterMapper;
+    protected final ResultSetParser<T> resultSetParser;
 
 
-  protected AbstractDAO(Connection _connection, ParameterMapper<T> _mapper, ResultSetParser<T> _parser) {
-    this.connection = _connection;
-    this.parameterMapper = _mapper;
-    this.resultSetParser = _parser;
-  }
+    protected AbstractDAO(Connection _connection, ParameterMapper<T> _mapper, ResultSetParser<T> _parser) {
+        this.connection = _connection;
+        this.parameterMapper = _mapper;
+        this.resultSetParser = _parser;
+    }
 
-  protected void insert(T entity, String query) throws SQLException {
-    PreparedStatement stmt = connection.prepareStatement(query);
-    parameterMapper.mapInsertParameters(stmt, entity);
-    stmt.executeUpdate();
-  }
+    protected void insert(T entity, String query) throws SQLException {
+        PreparedStatement stmt = connection.prepareStatement(query);
+        parameterMapper.mapInsertParameters(stmt, entity);
+        stmt.executeUpdate();
+    }
 
-  protected void update(T entity, String query) throws SQLException {
-    PreparedStatement stmt = connection.prepareStatement(query);
-    parameterMapper.mapUpdateParameters(stmt, entity);
-    stmt.executeUpdate();
-  }
+    protected void update(T entity, String query) throws SQLException {
+        PreparedStatement stmt = connection.prepareStatement(query);
+        parameterMapper.mapUpdateParameters(stmt, entity);
+        stmt.executeUpdate();
+    }
 
-  protected void delete(Integer id, String query) throws SQLException {
-    PreparedStatement stmt = connection.prepareStatement(query);
-    parameterMapper.mapIdParameter(stmt, id);
-    stmt.executeUpdate();
-  }
+    protected void delete(Integer id, String query) throws SQLException {
+        PreparedStatement stmt = connection.prepareStatement(query);
+        parameterMapper.mapIdParameter(stmt, id);
+        stmt.executeUpdate();
+    }
 
-  protected T getById(Integer id, String query) throws SQLException {
-    PreparedStatement stmt = connection.prepareStatement(query);
-    parameterMapper.mapIdParameter(stmt, id);
-    return resultSetParser.parseInList(stmt.executeQuery()).get(0);
-  }
+    protected T getById(Integer id, String query) throws SQLException {
+        PreparedStatement stmt = connection.prepareStatement(query);
+        parameterMapper.mapIdParameter(stmt, id);
+        return resultSetParser.parseInList(stmt.executeQuery()).get(0);
+    }
 
-  protected ArrayList<T> getAll(String query) throws SQLException {
-    PreparedStatement stmt = connection.prepareStatement(query);
-    return resultSetParser.parseInList(stmt.executeQuery());
-  }
+    protected ArrayList<T> getAll(String query) throws SQLException {
+        PreparedStatement stmt = connection.prepareStatement(query);
+        return resultSetParser.parseInList(stmt.executeQuery());
+    }
 
-  @Override
-  public void close() throws SQLException {
-    connection.close();
-  }
+    @Override
+    public void close() throws SQLException {
+        connection.close();
+    }
 }
