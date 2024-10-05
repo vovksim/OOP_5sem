@@ -15,16 +15,14 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class TrackDAOTest {
     private static Connection connection;
-    private TrackDAO trackDAO;
+    private static TrackDAO trackDAO;
 
     @BeforeAll
     public static void setupDatabase() throws SQLException {
-        // Подключаемся к in-memory H2 базе
         JdbcDataSource dataSource = new JdbcDataSource();
         dataSource.setURL("jdbc:h2:mem:testDB;DB_CLOSE_DELAY=-1;MODE=MySQL");
         connection = dataSource.getConnection();
 
-        // Создаем таблицу для треков
         connection.createStatement().execute(
                 "CREATE TABLE Track (" +
                         "id INTEGER PRIMARY KEY," +
@@ -32,11 +30,12 @@ public class TrackDAOTest {
                         "genre VARCHAR(50)," +
                         "duration INTEGER);"
         );
+        trackDAO = new TrackDAO(connection);
     }
 
-    @BeforeEach
-    public void setUp() {
-        trackDAO = new TrackDAO(connection);
+    @AfterAll
+    public static void closeDatabase() throws SQLException {
+        connection.close();
     }
 
     @AfterEach
