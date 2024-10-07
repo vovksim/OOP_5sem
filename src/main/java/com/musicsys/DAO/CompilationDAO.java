@@ -44,27 +44,27 @@ public class CompilationDAO extends AbstractDAO<Compilation> {
     }
 
     public void insert(Compilation entity) throws SQLException {
-        String query = "INSERT INTO compilation (id, compilationTitle) VALUES (?, ?)";
+        String query = "INSERT INTO Compilation (id, title) VALUES (?, ?)";
         super.insert(entity, query);
     }
 
     public void update(Compilation entity) throws SQLException {
-        String query = "UPDATE compilation SET compilationTitle = ? WHERE id = ?";
+        String query = "UPDATE Compilation SET title = ? WHERE id = ?";
         super.update(entity, query);
     }
 
     public void delete(Integer id) throws SQLException {
-        String query = "DELETE FROM compilation WHERE id = ?";
+        String query = "DELETE FROM Compilation WHERE id = ?";
         super.delete(id, query);
     }
 
     public Compilation get(Integer id) throws SQLException {
-        String query = "SELECT * FROM compilation WHERE id = ?";
+        String query = "SELECT * FROM Compilation WHERE id = ?";
         return super.getById(id, query);
     }
 
     public ArrayList<Compilation> getAll() throws SQLException {
-        String query = "SELECT * FROM compilation";
+        String query = "SELECT * FROM Compilation";
         return super.getAll(query);
     }
 }
