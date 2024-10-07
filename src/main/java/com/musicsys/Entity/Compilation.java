@@ -28,6 +28,11 @@ public class Compilation {
         }
         return false;
     }
+
+    @Override
+    public String toString() {
+        return "#" + id + " " + compilationTitle;
+    }
 }
 
 
