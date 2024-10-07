@@ -44,9 +44,10 @@ public class CompilationDTO {
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder();
-        result.append(result.toString());
+        result.append(compilation.toString());
+        result.append("\n");
         for (Track track : tracks) {
-            result.append(track.toString());
+            result.append("\t").append(track.toString()).append("\n");
         }
         return result.toString();
     }
