@@ -10,13 +10,13 @@ public class AbstractJunctionDAO<T> extends AbstractDAO<T> {
     super(_connection, _mapper, _parser);
   }
 
-  public ArrayList<T> getAllRelationsById(Integer relationId, String query) throws SQLException {
+  protected ArrayList<T> getAllRelationsById(Integer relationId, String query) throws SQLException {
     PreparedStatement stmt = connection.prepareStatement(query);
     parameterMapper.mapIdParameter(stmt, relationId);
     return resultSetParser.parseInList(stmt.executeQuery());
   }
 
-  public void removeRelation(T relation, String query) throws SQLException {
+  protected void removeRelation(T relation, String query) throws SQLException {
     PreparedStatement stmt = connection.prepareStatement(query);
     parameterMapper.mapInsertParameters(stmt, relation);
     stmt.executeUpdate();
